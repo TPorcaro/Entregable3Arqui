@@ -34,20 +34,31 @@ public class CarreraController {
 			if (c != null) {
 				return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(c).build();
 			}
-			return Response.status(404).header("Access-Control-Allow-Origin", "*").entity(new String("No se encontro la carrera")).build();
+			return Response.status(404).header("Access-Control-Allow-Origin", "*").build();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+			return Response.status(500).header("Access-Control-Allow-Origin", "*").build();
+		}
+	}
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAll() {
+		try {
+			List<Carrera> list = this.repo.getAll();
+			return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(list).build();
+		} catch (Exception e) {
+			 System.out.println(e.getMessage());
 			return Response.status(500).header("Access-Control-Allow-Origin", "*").build();
 		}
 	}
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response create(Carrera c) {
 		try {
 			this.repo.create(c);
-			return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(new String("Se creo la carrera")).build();
+			return Response.status(200).header("Access-Control-Allow-Origin", "*").build();
 		} catch (Exception e) {
 			 System.out.println(e.getMessage());
 			return Response.status(500).header("Access-Control-Allow-Origin", "*").build();
@@ -61,7 +72,7 @@ public class CarreraController {
 			if(this.repo.remove(id)) {
 				return Response.status(200).header("Access-Control-Allow-Origin", "*").build();
 			}else {
-				return Response.status(400).header("Access-Control-Allow-Origin", "*").entity(new String("No se encontro la carrera")).build();
+				return Response.status(400).header("Access-Control-Allow-Origin", "*").build();
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -73,9 +84,9 @@ public class CarreraController {
 	public Response update(Carrera c) {
 		try {
 			if(this.repo.update(c)) {
-				return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(new String("Se actualizo la carrera")).build();
+				return Response.status(200).header("Access-Control-Allow-Origin", "*").build();
 			}else {
-				return Response.status(404).header("Access-Control-Allow-Origin", "*").entity(new String("No se encontro la carrera")).build();
+				return Response.status(404).header("Access-Control-Allow-Origin", "*").build();
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

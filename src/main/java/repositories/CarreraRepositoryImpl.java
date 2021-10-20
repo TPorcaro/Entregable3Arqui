@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import DTO.CarreraConEstudiantes;
 import EMF.EMF;
 import entities.Carrera;
-import entities.Estudiante;
 
 /**
  * 
@@ -106,6 +105,13 @@ public class CarreraRepositoryImpl implements CarreraRepository {
 		Carrera carrera = this.em.find(Carrera.class, key);
 		this.em.getTransaction().commit();
 		return carrera;
+	}
+	@SuppressWarnings("unchecked")
+	public List<Carrera> getAll() {
+		this.em.getTransaction().begin();
+		List<Carrera> list = this.em.createQuery("SELECT c FROM Carrera c").getResultList();
+		this.em.getTransaction().commit();
+		return list;
 	}
 
 }

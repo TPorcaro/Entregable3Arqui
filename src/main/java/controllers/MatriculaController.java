@@ -38,13 +38,13 @@ public class MatriculaController {
 //	}
 	@DELETE
 	@Path("/{id}")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response remove(@PathParam("id") Integer id) {
 			try {
 				if(this.repoMatricula.remove(id)) {
-					return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(new String("Se borro la matricula")).build();				
+					return Response.status(200).header("Access-Control-Allow-Origin", "*").build();				
 				}else {
-					return Response.status(404).header("Access-Control-Allow-Origin", "*").entity(new String("No se encontro la matricula")).build();
+					return Response.status(404).header("Access-Control-Allow-Origin", "*").build();
 				}
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -60,7 +60,7 @@ public class MatriculaController {
 			if (matricula != null) {
 				return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(matricula).build();
 			}else {
-				return Response.status(404).header("Access-Control-Allow-Origin", "*").entity(new String("Matricula no encontrada")).build();
+				return Response.status(404).header("Access-Control-Allow-Origin", "*").build();
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
