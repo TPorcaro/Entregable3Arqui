@@ -37,7 +37,7 @@ public CarreraRepositoryImpl repoCarrera;
 			if (estudiante != null) {
 				return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(estudiante).build();
 			}
-			return Response.status(404).header("Access-Control-Allow-Origin", "*").entity(new String("Estudiante no encontrado")).build();
+			return Response.status(404).header("Access-Control-Allow-Origin", "*").build();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return Response.status(500).header("Access-Control-Allow-Origin", "*").build();
@@ -64,7 +64,7 @@ public CarreraRepositoryImpl repoCarrera;
 			if (list != null) {
 				return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(list).build();	
 			}
-			return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(new String("No existen estudiantes con ese genero")).build();
+			return Response.status(200).header("Access-Control-Allow-Origin", "*").build();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return Response.status(500).header("Access-Control-Allow-Origin", "*").build();
@@ -79,7 +79,7 @@ public CarreraRepositoryImpl repoCarrera;
 			if (list != null) {
 				return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(list).build();
 			}
-			return Response.status(404).header("Access-Control-Allow-Origin", "*").entity(new String("No se encontraron estudiantes")).build();
+			return Response.status(404).header("Access-Control-Allow-Origin", "*").build();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return Response.status(500).header("Access-Control-Allow-Origin", "*").build();
@@ -87,11 +87,12 @@ public CarreraRepositoryImpl repoCarrera;
 	}
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response create (Estudiante es) {
+		System.out.println("Line 92 "+es);
 		try {
 			this.repoEstudiante.create(es);
-			return Response.status(201).header("Access-Control-Allow-Origin", "*").entity(new String("Estudiante creado")).build();
+			return Response.status(201).header("Access-Control-Allow-Origin", "*").entity(es).build();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return Response.status(500).header("Access-Control-Allow-Origin", "*").build();
@@ -99,13 +100,13 @@ public CarreraRepositoryImpl repoCarrera;
 	}
 	@DELETE
 	@Path("/{id}")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response remove(@PathParam("id") int id) {
 		try {
 			if(this.repoEstudiante.remove(id)) {
-				return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(new String("Estudiante borrado")).build();
+				return Response.status(200).header("Access-Control-Allow-Origin", "*").build();
 			}else {
-				return Response.status(404).header("Access-Control-Allow-Origin", "*").entity(new String("Estudiante no encontrado")).build();
+				return Response.status(404).header("Access-Control-Allow-Origin", "*").build();
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -113,7 +114,7 @@ public CarreraRepositoryImpl repoCarrera;
 		}
 	}
 	@PUT
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(Estudiante c) {
 		try {
 			if(this.repoEstudiante.update(c)) {
@@ -128,16 +129,16 @@ public CarreraRepositoryImpl repoCarrera;
 	}
 	@POST
 	@Path("/matricular/{id-estudiante}/{id-carrera}")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response matricularse(@PathParam("id-estudiante") int estudiante, @PathParam("id-carrera") int carrera) {
 		try {
 			Estudiante e = this.repoEstudiante.get(estudiante);
 			if(e == null){
-				return Response.status(404).header("Access-Control-Allow-Origin", "*").entity(new String("Estudiante no encontrado")).build();
+				return Response.status(404).header("Access-Control-Allow-Origin", "*").build();
 			}
 			Carrera c = this.repoCarrera.get(carrera);
 			if(c == null){
-				return Response.status(404).header("Access-Control-Allow-Origin", "*").entity(new String("Carrera no encontrada")).build();
+				return Response.status(404).header("Access-Control-Allow-Origin", "*").build();
 			}
 			this.repoEstudiante.matricularse(e, c);
 			return Response.status(201).header("Access-Control-Allow-Origin", "*").build();

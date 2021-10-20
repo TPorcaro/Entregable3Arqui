@@ -12,8 +12,8 @@ public class ReporteCarrera {
 	private int idCarrera;
 	private String nombreCarrera;
 	private int anio;
-	Long egresados;
-	Long inscriptos;
+	private int egresados;
+	private int inscriptos;
 
 	public ReporteCarrera() {
 		super();
@@ -28,13 +28,13 @@ public class ReporteCarrera {
 	 * @param egresados
 	 * @param inscriptos
 	 */
-	public ReporteCarrera(int idCarrera, String nombreCarrera, int anio, Long egresados, Long inscriptos) {
+	public ReporteCarrera(int idCarrera, String nombreCarrera, int anio, long egresados, long inscriptos) {
 		super();
 		this.idCarrera = idCarrera;
 		this.nombreCarrera = nombreCarrera;
 		this.anio = anio;
-		this.egresados = egresados;
-		this.inscriptos = inscriptos;
+		this.egresados =  (int)egresados;
+		this.inscriptos = (int)inscriptos;
 	}
 
 	public int getIdCarrera() {
@@ -59,6 +59,22 @@ public class ReporteCarrera {
 
 	public void setAnio(int anio) {
 		this.anio = anio;
+	}
+	
+	public int getEgresados() {
+		return egresados;
+	}
+
+	public void setEgresados(int egresados) {
+		this.egresados = egresados;
+	}
+
+	public int getInscriptos() {
+		return inscriptos;
+	}
+
+	public void setInscriptos(int inscriptos) {
+		this.inscriptos = inscriptos;
 	}
 
 	@Override
